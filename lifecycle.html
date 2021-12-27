@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+	<link rel="stylesheet" href="./css/bootstrap.min.css">
+	<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+	<script src="./vuejs/vue.js"></script>
+	<style>
+		html {
+			margin: 30px 40px;
+		}
+	</style>
+</head>
+
+<body>
+	<div id="app">
+		<div v-on:click="getName()">{{name}}</div>
+		<h3 v-on:click="killAtAll()">Destroyed</h3>
+	</div>
+	<script type="text/javascript">
+		new Vue({
+			el: '#app',
+			data: {
+				name: 'kien quan',
+				posts: []
+			},
+			methods: {
+				getName() {
+					this.name = 'kien quan2'
+
+				},
+				getPosts() {
+					this.posts = fetch('https://jsonplaceholder.typicode.com/posts')
+						.then(response => response.json())
+						.then(json => console.log(json))
+					console.log(this.posts)
+				},
+				killAtAll() {
+					this.$destroy()
+				}
+			},
+			beforeCreated() {
+				console.log('before created fired')
+			},
+			created() {
+				this.getPosts()
+				console.log('created fired')
+			}
+		})
+	</script>
+</body>
+
+</html>

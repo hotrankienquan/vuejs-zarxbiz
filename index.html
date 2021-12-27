@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>vue project</title>
+	<link rel="stylesheet" href="./css/bootstrap.min.css">
+	<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+	<script src="./vuejs/vue.js"></script>
+	<style type="text/css">
+		.form {
+			margin-top: 200px;
+		}
+
+		label {
+			font-size: 30px;
+		}
+	</style>
+</head>
+
+<body>
+	<div id="app" class="container">
+		<div class="card" v-if="personality != ''">
+			<div class="card-body">
+				<div class="output">{{personality}}</div>
+				<div v-if="timer != 0">
+					{{timer}}
+				</div>
+			</div>
+		</div>
+		<form action="" class="form" @submit.prevent="processForm()">
+			<div class="form-group">
+				<label for="">Name here</label>
+				<input type="text" class="form-control" v-model="form.name">
+				<div v-if="form.name !='' ">{{form.name}}</div>
+			</div>
+			<div class="form-group">
+				<label for="">Age here</label>
+				<input type="text" class="form-control" v-model="form.age">
+				<div v-if="form.name !='' ">{{form.age}}</div>
+			</div>
+			<div class="form-group">
+
+				<input type="submit" class="btn btn-info">
+			</div>
+
+		</form>
+	</div>
+</body>
+<script type="text/javascript">
+
+	const app1 = new Vue({
+		el: '#app',
+		data: {
+			form: {
+				name: '',
+				age: ''
+			},
+			personality: '',
+			roles: [
+				'CEO',
+				"boss material",
+				"friendly",
+				'bad attitude',
+				'confident',
+				'player', 'leader', ' champion', 'loser'
+			],
+			timer: 0,
+			interval: ''
+		},
+		methods: {
+			processForm() {
+				if (this.form.name != '' && this.form.age != '') {
+					// Swal.fire(
+					// 	'Good job!',
+					// 	'You clicked the button!',
+					// 	'success'
+					// )
+					let name = this.form.name.toLowerCase()
+					if (name[0] == 'a' && this.form.age < 20) {
+						this.personality = this.roles[4]
+
+					}
+					this.showRole();
+				} else {
+					Swal.fire(
+						'The Internet?',
+						'That thing is still around?',
+						'question'
+					)
+				}
+			},
+			showRole() {
+				setTimeout(() => {
+					this.interval = setInterval(() => {
+						this.timer++;
+						if (this.timer == 5) {
+							this.timer = 0;
+							this.clearAll();
+						}
+					}, 1000)
+				}, 3000)
+			},
+			clearAll() {
+				clearInterval(this.interval)
+				Swal.fire(
+					'Good job! ' + this.personality,
+					'You clicked the button!',
+					'success'
+				)
+			}
+		}
+
+	});
+
+</script>
+
+</html>
